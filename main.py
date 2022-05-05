@@ -61,10 +61,10 @@ class Fish(pygame.sprite.Sprite, FishData):
 
     def CountLifetime(self):
         for i in range(5):
-            FishData("Dang").lifetime = FishData("Dang").lifetime - 1
-            if FishData("Dang").lifetime == 0:
-                FishData("Dang").status("dead")
-            print(FishData("Dang").lifetime)
+            FishData().lifetime = FishData().lifetime - 1
+            if FishData().lifetime == 0:
+                FishData().status("dead")
+            print(FishData().lifetime)
         
         
 # initialize game engine
