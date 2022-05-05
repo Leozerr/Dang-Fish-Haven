@@ -142,9 +142,9 @@ if __name__ == "__main__":
     msg_handler.start() 
     send_handler = threading.Thread(target=c.send_pond)
     send_handler.start()
-    # while(connected) :
-
-    #     #c.migrate_fish(f1,"sick salmon")
-    #     #c.migrate_fish(f2,"sick salmon")
+    while(connected) :
+        time.sleep(5)
+        c.migrate_fish(f1,"Dang")
+    
 
 

@@ -36,6 +36,7 @@ class Fish(pygame.sprite.Sprite):
         self.path = [0, 955] #distance of fish
         self.swimCount = 0
         self.vel = 3
+        self.life = 0
         self.fishData = fishData
         #print(FishData().id + "\n" + FishData().state + "\n")
         
@@ -68,12 +69,12 @@ class Fish(pygame.sprite.Sprite):
         #print("x:" + str(self.x))
 
     # def CountLifetime(self):
-    #    for i in range(5):
-    #        FishData().lifetime = FishData().lifetime - 1
-    #        if FishData().lifetime == 0:
-    #            FishData().status("dead")
-    #        print(FishData().lifetime)
-    #   
+    #     while(1):
+    #        self.fishData.lifetime -= 10
+    #        if self.fishData.lifetime == 0:
+    #            self.fishData.status("dead")
+    #        print(self.fishData.lifetime)
+      
         
 # initialize game engine
 class main() :
@@ -107,7 +108,7 @@ class main() :
     #test
     f1 = FishData("Dang","123456")
     f2 = FishData("Dang","123456")
-    p = PondData("pla")
+    p = PondData("Dang")
     p.addFish(f1)
     p.addFish(f2)
     c = Client(p)
@@ -120,22 +121,51 @@ class main() :
 
     # Fishes
     listFish = []
-    g = pygame.sprite.Group()
     
     for s in range(5):
         f = FishData('dang','123456')
         fish = Fish(np.random.randint(0, 955), np.random.randint(0, 400), 64, 64, 450, f)
         listFish.append(fish)
-        g.add(fish)
-
+        c.pond.addFish(f)
+    print(c.pond.fishes)
+       
+            
+           
+    
     while(dead==False):
+
+        if(len(c.pond.fishes) > len(listFish)):
+            fish_diff = len(c.pond.fishes)-(len(listFish))
+            new_list = c.pond.fishes[len(listFish):len(c.pond.fishes)]
+            for fish in new_list:
+                if(fish.genesis == "peem"):
+                    sfish = Fish(np.random.randint(0, 955), np.random.randint(0, 400), 64, 64, 450, fish)
+                elif(fish.genesis == "sick-salmon"):
+                    sfish = Fish(np.random.randint(0, 955), np.random.randint(0, 400), 64, 64, 450, fish)
+                else:
+                    sfish = Fish(np.random.randint(0, 955), np.random.randint(0, 400), 64, 64, 450, fish)
+                listFish.append(sfish)
+
+        
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 dead = True
 
         screen.blit(background_image, [0, 0])
+
         for fishes in listFish:
-            fishes.draw(screen)
+            fishes.life += 1
+            if fishes.life < fishes.fishData.lifetime*10:
+                fishes.draw(screen)
+            else:
+                fishes.fishData.status == "dead"
+                # c.pond.fishes.remove(fishes)
+                # fishes.kill()
+                
+
+
+      
+
         
         #fish.CountLifetime()
         crosshair_group.draw(screen)
