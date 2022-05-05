@@ -110,7 +110,9 @@ class main() :
                 dead = True
 
         screen.blit(background_image, [0, 0])
-        fish.draw(screen)
+        for fishes in listFish:
+            fishes.draw(screen)
+        
         #fish.CountLifetime()
         crosshair_group.draw(screen)
         crosshair_group.update()
