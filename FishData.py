@@ -16,11 +16,11 @@ def randPheromoneThresh():
     return random.randint(30, 60)
 
 class FishData:
-    def __init__(self, genesis, parentId=None):
+    def __init__(self, parentId=None):
         self.id = randId()
         self.state = "in-pond"
         self.status = "alive"
-        self.genesis = genesis ## Pond name
+        self.genesis = "Dang" ## Pond name
         self.crowdThreshold = randCrowdThresh()
         self.pheromone = 0
         self.pheromoneThresh = randPheromoneThresh()

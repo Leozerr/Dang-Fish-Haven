@@ -29,8 +29,8 @@ class Fish(pygame.sprite.Sprite, FishData):
         self.path = [0, 955] #distance of fish
         self.swimCount = 0
         self.vel = 3
-        FishData("Dang").id = id
-        print(FishData("Dang").id + "\n" + FishData("Dang").state + "\n")
+        FishData().id = id
+        print(FishData().id + "\n" + FishData().state + "\n")
     
     def draw(self, screen):
         self.move()
