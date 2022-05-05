@@ -156,7 +156,7 @@ class main() :
                 fishess.draw(screen)
             else:
                 fishess.fishData.status == "dead"
-=
+
         for x in listFish:
             if x.fishData.status == "dead":
                 c.pond.removeFish(x.fishData)
