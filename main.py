@@ -1,6 +1,6 @@
 # import pygame
 import pygame
-
+import numpy as np
 from FishData import FishData
 
 class Crosshair(pygame.sprite.Sprite):
@@ -23,9 +23,10 @@ class Fish(pygame.sprite.Sprite, FishData):
         self.width = width
         self.height = height
         self.end = end
-        self.path = [100, 955] #distance of fish
+        self.path = [0, 955] #distance of fish
         self.swimCount = 0
         self.vel = 3
+        print(FishData("Dang").status)
     
     def draw(self, screen):
         self.move()
@@ -52,7 +53,7 @@ class Fish(pygame.sprite.Sprite, FishData):
             else:
                 self.vel = self.vel * -1
                 self.swimCount = 0
-        #print("x:" + str(self.x) + " count:" + str(self.swimCount))
+        #print("x:" + str(self.x))
 
         
 # initialize game engine
@@ -84,7 +85,7 @@ class main() :
     crosshair_group.add(crosshair)
 
     # Fish
-    fish = Fish(100, 410, 64, 64, 450)
+    fish = Fish(np.random.randint(0, 955), np.random.randint(0, 400), 64, 64, 450)
 
     while(dead==False):
         for event in pygame.event.get():
