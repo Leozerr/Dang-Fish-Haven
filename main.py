@@ -126,13 +126,7 @@ class main() :
         f = FishData('dang','123456')
         fish = Fish(np.random.randint(0, 955), np.random.randint(0, 400), 64, 64, 450, f)
         listFish.append(fish)
-        c.pond.addFish(f)
-<<<<<<< HEAD
-        
-=======
->>>>>>> c341564193fc5ee08cfd26fa846a8533730f669d
-       
-            
+        c.pond.addFish(f)            
            
     
     while(dead==False):
@@ -161,15 +155,8 @@ class main() :
             if fishess.life < fishess.fishData.lifetime*10:
                 fishess.draw(screen)
             else:
-<<<<<<< HEAD
                 fishess.fishData.status == "dead"
-=======
-                fishes.fishData.status == "dead"
-                print(listFish)
-                # c.pond.fishes.remove(fishes)
-                # fishes.kill()
->>>>>>> c341564193fc5ee08cfd26fa846a8533730f669d
-                
+=
         for x in listFish:
             if x.fishData.status == "dead":
                 c.pond.removeFish(x.fishData)
