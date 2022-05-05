@@ -127,7 +127,6 @@ class main() :
         fish = Fish(np.random.randint(0, 955), np.random.randint(0, 400), 64, 64, 450, f)
         listFish.append(fish)
         c.pond.addFish(f)
-    print(c.pond.fishes)
        
             
            
@@ -159,6 +158,7 @@ class main() :
                 fishes.draw(screen)
             else:
                 fishes.fishData.status == "dead"
+                print(listFish)
                 # c.pond.fishes.remove(fishes)
                 # fishes.kill()
                 
