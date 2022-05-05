@@ -11,6 +11,9 @@ class PondData:
     
     def addFish(self, fishData):
         self.fishes.append(fishData)
+    
+    def removeFish(self, fishData):
+        self.fishes.remove(fishData)
 
     def getFishById( self, fishId):
         res = None
