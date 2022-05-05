@@ -18,6 +18,9 @@ class Crosshair(pygame.sprite.Sprite):
         super().__init__()
         self.image = pygame.image.load(pic_path)
         self.rect = self.image.get_rect()
+        self.gunshot = pygame.mixer.Sound("images/bullet.mp3")
+    def shoot(self):
+        self.gunshot.play()
     def update(self):
         self.rect.center = pygame.mouse.get_pos()
 
@@ -145,6 +148,8 @@ class main() :
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 dead = True
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                crosshair.shoot()
 
         screen.blit(background_image, [0, 0])
         
