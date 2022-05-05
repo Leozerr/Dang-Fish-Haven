@@ -17,15 +17,26 @@ class Crosshair(pygame.sprite.Sprite):
         super().__init__()
         self.image = pygame.image.load(pic_path)
         self.rect = self.image.get_rect()
-        self.gunshot = pygame.mixer.Sound("images/bullet.mp3")
+        self.gunshot = pygame.mixer.Sound("images/bubble.mp3")
     def shoot(self):
         self.gunshot.play()
     def update(self):
         self.rect.center = pygame.mouse.get_pos()
 
+    def create_bubble(self):
+        return Bubble(pygame.mouse.get_pos()[0], pygame.mouse.get_pos()[1], "images/bubble.png")
+
+class Bubble(pygame.sprite.Sprite):
+    def __init__(self, pos_x, pos_y, pic_path):
+        super().__init__()
+        self.image = pygame.image.load(pic_path)
+        self.rect = self.image.get_rect(center = (pos_x, pos_y))
+
+    def update(self):
+        self.rect.y -= 5
+
+
 class Fish(pygame.sprite.Sprite):
-    #swimRight = [pygame.image.load('images/R1E.png'),pygame.image.load('images/R2E.png'),pygame.image.load('images/R3E.png'),pygame.image.load('images/R4E.png'),pygame.image.load('images/R5E.png'),pygame.image.load('images/R6E.png'),pygame.image.load('images/R7E.png'),pygame.image.load('images/R11E.png')]#,pygame.image.load('images/R8E.png'),pygame.image.load('images/R9E.png'),pygame.image.load('images/R10E.png'),pygame.image.load('images/R11E.png')]
-    #swimLeft = [pygame.image.load('images/L1E.png'),pygame.image.load('images/L2E.png'),pygame.image.load('images/L3E.png'),pygame.image.load('images/L4E.png'),pygame.image.load('images/L5E.png'),pygame.image.load('images/L6E.png'),pygame.image.load('images/L7E.png'),pygame.image.load('images/L11E.png')]#,pygame.image.load('images/L8E.png'),pygame.image.load('images/L9E.png'),pygame.image.load('images/L10E.png'),pygame.image.load('images/L11E.png')]
     swimRight = [pygame.image.load('images/swimRight/R1.png'),pygame.image.load('images/swimRight/R2.png'),pygame.image.load('images/swimRight/R3.png'),pygame.image.load('images/swimRight/R4.png'),pygame.image.load('images/swimRight/R5.png'),pygame.image.load('images/swimRight/R6.png'),pygame.image.load('images/swimRight/R7.png'),pygame.image.load('images/swimRight/R8.png')]
     swimLeft = [pygame.image.load('images/swimLeft/L1.png'),pygame.image.load('images/swimLeft/L2.png'),pygame.image.load('images/swimLeft/L3.png'),pygame.image.load('images/swimLeft/L4.png'),pygame.image.load('images/swimLeft/L5.png'),pygame.image.load('images/swimLeft/L6.png'),pygame.image.load('images/swimLeft/L7.png'),pygame.image.load('images/swimLeft/L8.png')]
 
@@ -108,10 +119,13 @@ class main() :
     crosshair_group = pygame.sprite.Group()
     crosshair_group.add(crosshair)
 
+    # Bubble
+    bubble_group = pygame.sprite.Group()
+
     #test
-    f1 = FishData("Dang","123456")
-    f2 = FishData("Dang","123456")
-    p = PondData("Dang")
+    f1 = FishData("dang","123456")
+    f2 = FishData("dang","123456")
+    p = PondData("dang")
     p.addFish(f1)
     p.addFish(f2)
     c = Client(p)
@@ -131,7 +145,7 @@ class main() :
         listFish.append(fish)
         c.pond.addFish(f)            
            
-    
+    count = 0
     while(dead==False):
 
         if(len(c.pond.fishes) > len(listFish)):
@@ -146,12 +160,16 @@ class main() :
                     sfish = Fish(np.random.randint(0, 955), np.random.randint(0, 400), 64, 64, 450, fish)
                 listFish.append(sfish)
 
-        
+
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 dead = True
             if event.type == pygame.MOUSEBUTTONDOWN:
+                count += 1
                 crosshair.shoot()
+                bubble_group.add(crosshair.create_bubble())
+                # if pygame.sprite.collide_rect(crosshair, fish) == True:
+                #     print("dangggg")
 
         screen.blit(background_image, [0, 0])
 
@@ -167,11 +185,18 @@ class main() :
                 c.pond.removeFish(x.fishData)
                 listFish.remove(x)
 
-            
-
+        font = pygame.font.Font(None, 30)
+        text = ('Dang Fish : ' + str(len(listFish)) + " Bubble: " + str(count))
+        text_render = font.render(text, 1, (0, 0, 0))
+        textpos = text_render.get_rect()
+        textpos.right = window_width
+        textpos.top = 0
+        screen.blit(text_render, textpos)
         
         #fish.CountLifetime()
+        bubble_group.draw(screen)
         crosshair_group.draw(screen)
+        bubble_group.update()
         crosshair_group.update()
 
         pygame.display.flip()
