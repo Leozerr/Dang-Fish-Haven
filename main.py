@@ -12,9 +12,11 @@ class Crosshair(pygame.sprite.Sprite):
         self.rect.center = pygame.mouse.get_pos()
 
 class Fish(pygame.sprite.Sprite, FishData):
-    swimRight = [pygame.image.load('images/R1E.png'),pygame.image.load('images/R2E.png'),pygame.image.load('images/R3E.png'),pygame.image.load('images/R4E.png'),pygame.image.load('images/R5E.png'),pygame.image.load('images/R6E.png'),pygame.image.load('images/R7E.png'),pygame.image.load('images/R11E.png')]#,pygame.image.load('images/R8E.png'),pygame.image.load('images/R9E.png'),pygame.image.load('images/R10E.png'),pygame.image.load('images/R11E.png')]
-    swimLeft = [pygame.image.load('images/L1E.png'),pygame.image.load('images/L2E.png'),pygame.image.load('images/L3E.png'),pygame.image.load('images/L4E.png'),pygame.image.load('images/L5E.png'),pygame.image.load('images/L6E.png'),pygame.image.load('images/L7E.png'),pygame.image.load('images/L11E.png')]#,pygame.image.load('images/L8E.png'),pygame.image.load('images/L9E.png'),pygame.image.load('images/L10E.png'),pygame.image.load('images/L11E.png')]
-    
+    #swimRight = [pygame.image.load('images/R1E.png'),pygame.image.load('images/R2E.png'),pygame.image.load('images/R3E.png'),pygame.image.load('images/R4E.png'),pygame.image.load('images/R5E.png'),pygame.image.load('images/R6E.png'),pygame.image.load('images/R7E.png'),pygame.image.load('images/R11E.png')]#,pygame.image.load('images/R8E.png'),pygame.image.load('images/R9E.png'),pygame.image.load('images/R10E.png'),pygame.image.load('images/R11E.png')]
+    #swimLeft = [pygame.image.load('images/L1E.png'),pygame.image.load('images/L2E.png'),pygame.image.load('images/L3E.png'),pygame.image.load('images/L4E.png'),pygame.image.load('images/L5E.png'),pygame.image.load('images/L6E.png'),pygame.image.load('images/L7E.png'),pygame.image.load('images/L11E.png')]#,pygame.image.load('images/L8E.png'),pygame.image.load('images/L9E.png'),pygame.image.load('images/L10E.png'),pygame.image.load('images/L11E.png')]
+    swimRight = [pygame.image.load('images/swimRight/R1.png'),pygame.image.load('images/swimRight/R2.png'),pygame.image.load('images/swimRight/R3.png'),pygame.image.load('images/swimRight/R4.png'),pygame.image.load('images/swimRight/R5.png'),pygame.image.load('images/swimRight/R6.png'),pygame.image.load('images/swimRight/R7.png'),pygame.image.load('images/swimRight/R8.png')]
+    swimLeft = [pygame.image.load('images/swimLeft/L1.png'),pygame.image.load('images/swimLeft/L2.png'),pygame.image.load('images/swimLeft/L3.png'),pygame.image.load('images/swimLeft/L4.png'),pygame.image.load('images/swimLeft/L5.png'),pygame.image.load('images/swimLeft/L6.png'),pygame.image.load('images/swimLeft/L7.png'),pygame.image.load('images/swimLeft/L8.png')]
+
     def __init__(self, pos_x, pos_y, width, height, end):
         self.x = pos_x
         self.y = pos_y
@@ -90,9 +92,9 @@ class main() :
                 dead = True
 
         screen.blit(background_image, [0, 0])
+        fish.draw(screen)
         crosshair_group.draw(screen)
         crosshair_group.update()
-        fish.draw(screen)
 
         pygame.display.flip()
         clock.tick(clock_tick_rate)
