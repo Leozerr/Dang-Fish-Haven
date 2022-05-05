@@ -12,7 +12,7 @@ from Payload import Payload
 
 import pickle
 IP = socket.gethostbyname(socket.gethostname())
-PORT = 8003
+PORT = 8016
 ADDR = (IP, PORT)
 MSG_SIZE = 4096
 FORMAT = "utf-8"

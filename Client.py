@@ -12,7 +12,7 @@ from Payload import Payload
 
 import pickle
 IP = socket.gethostbyname(socket.gethostname())
-PORT = 8003
+PORT = 8016
 ADDR = (IP, PORT)
 MSG_SIZE = 4096
 FORMAT = "utf-8"
@@ -131,8 +131,8 @@ class Client:
 
 if __name__ == "__main__":
 
-    f1 = FishData("Sick Salmon","123456")
-    f2 = FishData("Fish2","123456")
+    f1 = FishData("Dang","123456")
+    f2 = FishData("Dang2","123456")
     p = PondData("pla")
     p.addFish(f1)
     p.addFish(f2)
