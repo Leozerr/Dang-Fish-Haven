@@ -11,8 +11,8 @@ from PondData import PondData
 from Payload import Payload
 
 import pickle
-IP = socket.gethostbyname(socket.gethostname())
-PORT = 8016
+IP = "0.tcp.ap.ngrok.io"
+PORT = 11513
 ADDR = (IP, PORT)
 MSG_SIZE = 4096
 FORMAT = "utf-8"
@@ -129,22 +129,22 @@ class Client:
         #     print(f"Vivisystem : {msg}")
         #     return msg
 
-if __name__ == "__main__":
+# if __name__ == "__main__":
 
-    f1 = FishData("Dang","123456")
-    f2 = FishData("Dang2","123456")
-    p = PondData("pla")
-    p.addFish(f1)
-    p.addFish(f2)
-    connected = True
-    c = Client(p)
-    msg_handler = threading.Thread(target=c.get_msg)   
-    msg_handler.start() 
-    send_handler = threading.Thread(target=c.send_pond)
-    send_handler.start()
-    c.migrate_fish(f1,"sick salmon")
-    c.migrate_fish(f2,"sick salmon")    
-    # while(connected) :
-    #     #c.migrate_fish(f2,"sick salmon")
+#     f1 = FishData("Dang","123456")
+#     f2 = FishData("Dang2","123456")
+#     p = PondData("pla")
+#     p.addFish(f1)
+#     p.addFish(f2)
+#     connected = True
+#     c = Client(p)
+#     msg_handler = threading.Thread(target=c.get_msg)   
+#     msg_handler.start() 
+#     send_handler = threading.Thread(target=c.send_pond)
+#     send_handler.start()
+#     c.migrate_fish(f1,"sick salmon")
+#     c.migrate_fish(f2,"sick salmon")    
+#     # while(connected) :
+#     #     #c.migrate_fish(f2,"sick salmon")
 
 

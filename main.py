@@ -5,6 +5,7 @@ from FishData import FishData
 from PondData import PondData
 import threading
 import sys
+import time
 from Client import Client
 from queue import Queue
 
@@ -52,7 +53,7 @@ class Fish(pygame.sprite.Sprite):
         else:
             screen.blit(self.swimLeft[self.swimCount //3], (self.x, self.y))
             self.swimCount += 1
-
+            
     def move(self):
         if self.vel > 0:
             if self.x + self.vel < self.path[1]:
@@ -66,15 +67,10 @@ class Fish(pygame.sprite.Sprite):
             else:
                 self.vel = self.vel * -1
                 self.swimCount = 0
-        #print("x:" + str(self.x))
-
-    # def CountLifetime(self):
-    #     while(1):
-    #        self.fishData.lifetime -= 10
-    #        if self.fishData.lifetime == 0:
-    #            self.fishData.status("dead")
-    #        print(self.fishData.lifetime)
-      
+   
+    def migrate(self,c,ponds):
+        c.migrate_fish(self,ponds)
+        time.sleep(3)
         
 # initialize game engine
 class main() :
@@ -106,30 +102,32 @@ class main() :
     crosshair_group.add(crosshair)
 
     #test
-    f1 = FishData("Dang","123456")
-    f2 = FishData("Dang","123456")
-    p = PondData("Dang")
-    p.addFish(f1)
-    p.addFish(f2)
+ 
+    p = PondData("dang")
     c = Client(p)
     msg_handler = threading.Thread(target=c.get_msg)   
     msg_handler.start() 
     send_handler = threading.Thread(target=c.send_pond)
     send_handler.start()
-    c.migrate_fish(f1,"sick salmon")
-    c.migrate_fish(f2,"sick salmon")    
+    
 
     # Fishes
     listFish = []
     
-    for s in range(5):
+    for s in range(6):
         f = FishData('dang','123456')
         fish = Fish(np.random.randint(0, 955), np.random.randint(0, 400), 64, 64, 450, f)
         listFish.append(fish)
-        c.pond.addFish(f)            
-           
+        c.pond.addFish(f)     
+
+    pondsList = ['pla','sick salmon','peem']   
     
+  
     while(dead==False):
+        pondsval = np.random.randint(0,2)
+        fishval = np.random.randint(0,len(listFish))
+
+        listFish[fishval].migrate(c,pondsList[pondsval])
 
         if(len(c.pond.fishes) > len(listFish)):
             fish_diff = len(c.pond.fishes)-(len(listFish))
@@ -149,18 +147,36 @@ class main() :
                 dead = True
 
         screen.blit(background_image, [0, 0])
+        
+        
 
         for fishess in listFish:
             fishess.life += 1
-            if fishess.life < fishess.fishData.lifetime*10:
+            if fishess.life < fishess.fishData.lifetime:
                 fishess.draw(screen)
             else:
-                fishess.fishData.status == "dead"
+                fishess.fishData.status = "dead"
 
+        deadFish = []
         for x in listFish:
             if x.fishData.status == "dead":
-                c.pond.removeFish(x.fishData)
+                print("Dead")
+                #c.pond.fishes.remove(x.fishData)
+                deadFish.append(x.fishData)               
+                x.kill()
                 listFish.remove(x)
+
+        for i in deadFish:
+            c.pond.fishes.remove(i)
+            print("fish : ",len(c.pond.fishes))
+            print("Listfish : ", len(listFish))
+                # listFish.remove(x)
+
+
+        
+
+       
+                
 
             
 
