@@ -1,7 +1,9 @@
 # import pygame
 import pygame
 import numpy as np
+import sys
 from FishData import FishData
+from PondData import PondData
 
 class Crosshair(pygame.sprite.Sprite):
     def __init__(self, pic_path):
@@ -18,6 +20,7 @@ class Fish(pygame.sprite.Sprite, FishData):
     swimLeft = [pygame.image.load('images/swimLeft/L1.png'),pygame.image.load('images/swimLeft/L2.png'),pygame.image.load('images/swimLeft/L3.png'),pygame.image.load('images/swimLeft/L4.png'),pygame.image.load('images/swimLeft/L5.png'),pygame.image.load('images/swimLeft/L6.png'),pygame.image.load('images/swimLeft/L7.png'),pygame.image.load('images/swimLeft/L8.png')]
 
     def __init__(self, pos_x, pos_y, width, height, end):
+        pygame.sprite.Sprite.__init__(self)
         self.x = pos_x
         self.y = pos_y
         self.width = width
@@ -26,7 +29,8 @@ class Fish(pygame.sprite.Sprite, FishData):
         self.path = [0, 955] #distance of fish
         self.swimCount = 0
         self.vel = 3
-        print(FishData("Dang").status)
+        FishData("Dang").id = id
+        print(FishData("Dang").id + "\n" + FishData("Dang").state + "\n")
     
     def draw(self, screen):
         self.move()
@@ -55,6 +59,13 @@ class Fish(pygame.sprite.Sprite, FishData):
                 self.swimCount = 0
         #print("x:" + str(self.x))
 
+    def CountLifetime(self):
+        for i in range(5):
+            FishData("Dang").lifetime = FishData("Dang").lifetime - 1
+            if FishData("Dang").lifetime == 0:
+                FishData("Dang").status("dead")
+            print(FishData("Dang").lifetime)
+        
         
 # initialize game engine
 class main() :
@@ -65,6 +76,7 @@ class main() :
 
     #animation_increment=10
     clock_tick_rate=20
+    sys.setrecursionlimit(1500)
 
     # Open a window
     size = (window_width, window_height)
@@ -84,8 +96,13 @@ class main() :
     crosshair_group = pygame.sprite.Group()
     crosshair_group.add(crosshair)
 
-    # Fish
-    fish = Fish(np.random.randint(0, 955), np.random.randint(0, 400), 64, 64, 450)
+    # Fishes
+    listFish = []
+    g = pygame.sprite.Group()
+    for s in range(5):
+        fish = Fish(np.random.randint(0, 955), np.random.randint(0, 400), 64, 64, 450)
+        listFish.append(fish)
+        g.add(fish)
 
     while(dead==False):
         for event in pygame.event.get():
@@ -94,6 +111,7 @@ class main() :
 
         screen.blit(background_image, [0, 0])
         fish.draw(screen)
+        #fish.CountLifetime()
         crosshair_group.draw(screen)
         crosshair_group.update()
 
